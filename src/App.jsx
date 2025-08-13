@@ -43,18 +43,33 @@ function App(){
   const handleLength=(e)=>{
     setLength(e.target.value); //length
   }
+
   
   useEffect(()=>{ //for running handleClick everytime page loads
     handleClick();
-  },[length,numbers,specials])
+  },[length,numbers,specials])// handleClick() is called whenever dependencies(length/numbers/specials) changes
+
+
+  const handleCopy=()=>{
+    navigator.clipboard.writeText(gen);  //navigator has clipboard function, writegen writes the data in gen to clipboard
+    alert("Password copied to clipboard");
+  }
 
 
   return(
   <div className="bg-gray-900 h-screen py-16 flex items-center justify-center">
     <div className="container mx-auto bg-gray-700 p-4 rounded-2xl flex flex-col items-center gap-4">
       <h1 className="text-center text-white text-2xl font-bold">Password Generator</h1>
-      <input type="text" className=" bg-white rounded flex px-16" value={gen}/>
-      <div className="flex items-center gap-2">
+
+      <div className="flex items-center">{/*div for generated password and copy button  */}
+        <input type="text" className=" bg-white rounded-l-sm flex px-16 py-1" value={gen}/>
+        <button className="cursor-pointer bg-blue-600 text-white px-2 py-1 rounded-r-sm" onClick={handleCopy}>Copy</button>
+        
+      </div>
+      
+      
+      
+      <div className="flex items-center gap-2">  {/*div class for range and checkbox */}
         <input type="range" min={8} max={16} value={length} onChange={handleLength} className="cursor-pointer"/>
         <p className="text-white font-bold">{length}</p>
         <input type="checkbox" id="numbers" className="text-white cursor-pointer" checked={numbers} onChange={handleNum}/><label htmlFor="numbers">Numbers</label>
