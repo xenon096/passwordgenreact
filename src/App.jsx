@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 function App(){
-
+  
   const char="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const num="1234567890"
   const spl="!@#$%^&*()"
-  
 
   const [gen,setGen]=useState("");
   const [length,setLength]=useState(8);
   const [numbers,setNum]=useState(false);
   const [specials,setSpl]=useState(false);
-  const handleClick=()=>{
+  const handleClick=useCallback(()=>{
+
     let pass="";
     let usable=""+char;
 
@@ -34,6 +34,8 @@ function App(){
     setGen(pass);
 
   }
+,[length,numbers,specials])
+
   const handleNum=(e)=>{
     setNum(e.target.checked); //numbers
   }
@@ -41,13 +43,13 @@ function App(){
     setSpl(e.target.checked); //special char
   }
   const handleLength=(e)=>{
-    setLength(e.target.value); //length
+    setLength(Number(e.target.value)); //length & making it from default from string to number
   }
 
   
   useEffect(()=>{ //for running handleClick everytime page loads
     handleClick();
-  },[length,numbers,specials])// handleClick() is called whenever dependencies(length/numbers/specials) changes
+  },[])// handleClick() is called whenever dependencies(length/numbers/specials) changes
 
 
   const handleCopy=()=>{
